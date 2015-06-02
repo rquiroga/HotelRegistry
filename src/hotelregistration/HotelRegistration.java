@@ -6,6 +6,7 @@
 package hotelregistration;
 
 import com.xmn.beans.Hotel;
+import com.xmn.controller.HotelDao;
 import com.xmn.db.DBConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,16 +34,25 @@ public class HotelRegistration {
         dbCon.getConnetion();
 
         try {
+            
             Statement st = dbCon.getConnetion().createStatement();
-            ResultSet rs = st.executeQuery("SELECT NAME, ADDRESS FROM HOTEL");
-            
+            ResultSet rs = st.executeQuery("SELECT NAME, ADDRESS FROM HOTEL");            
             Hotel hotel = (Hotel) context.getBean("hotel");
-            
             while (rs.next()) {
                 hotel.setName(rs.getString("name"));
                 hotel.setAddress(rs.getString("address"));
-                System.out.print("Nombre: " + hotel.getName() + ", Direccion: " + hotel.getAddress());
+                System.out.println("1. Nombre: " + hotel.getName() + ", Direccion: " + hotel.getAddress());
             }
+            
+            HotelDao hotelDao = (HotelDao) context.getBean("hotelDao");       
+            Hotel hotel1 = hotelDao.findHotel("Moon");
+            
+            Hotel hotel2 = new Hotel();
+            hotel2.setName("Jupiter");
+            hotel2.setAddress("Jupiter");
+            hotelDao.insertHotel(hotel2);
+            
+            System.out.println("2. Nombre: " + hotel1.getName() + ", Direccion: " + hotel1.getAddress());
             
         } catch (SQLException ex) {
             Logger.getLogger(HotelRegistration.class.getName()).log(Level.SEVERE, null, ex);

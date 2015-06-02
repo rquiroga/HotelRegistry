@@ -7,13 +7,24 @@ and open the template in the editor.
 
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-   <bean id="hotel" class="com.xmn.beans.Hotel">
-       <property name="name" value="Hotel CBBA"/>
-       <property name="address" value="Cochabamba"/>
-   </bean>
+    <bean id="hotel" class="com.xmn.beans.Hotel">
+        <property name="name" value="Hotel CBBA"/>
+        <property name="address" value="Cochabamba"/>
+    </bean>
+   
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property value="oracle.jdbc.OracleDriver" name="driverClassName" />
+        <property name="url" value="jdbc:oracle:thin:@//localhost:1521/hoteldb" />
+        <property name="username" value="system" />
+        <property name="password" value="hoteldb" />
+    </bean>
+    
+    <bean id="hotelDao" class="com.xmn.controller.implementation.HotelDaoImp">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
 
 </beans>
